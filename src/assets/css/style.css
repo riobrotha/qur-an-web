@@ -3,6 +3,31 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "UthmanThaha";
+  src: url("https://kangismet.github.io/fonts/Uthman-Thaha.eot");
+  src: url("https://kangismet.github.io/fonts/Uthman-Thaha.eot?#iefix")
+      format("embedded-opentype"),
+    url("https://kangismet.github.io/fonts/Uthman-Thaha.ttf") format("truetype");
+  font-weight: 400;
+  font-weight: normal;
+  font-display: swap;
+}
+
+.arab {
+  font-size: 28px;
+  line-height: 48px;
+  font-family: "UthmanThaha", "Traditional Arabic", Tahoma, sans-serif;
+  font-weight: 400;
+  text-align: right;
+  direction: rtl;
+  color: rgb(17 24 39);
+}
+
+.dark .arab {
+  color: #fff;
+}
+
 * {
   @apply font-sans;
 }

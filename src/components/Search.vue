@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, ref } from "vue";
 import _ from "lodash";
+import { useSuratStore } from "@/stores/surat";
 const props = defineProps({
   placeholder: {
     type: String,
@@ -8,13 +9,17 @@ const props = defineProps({
   },
 });
 
-const querySearch = ref("");
+const suratStore = useSuratStore();
 
-const changeSearch = _.debounce(() => console.log(querySearch.value), 1000);
+const querySearch = ref("");
+const onSearching = () => {
+  suratStore.onSearch(querySearch.value);
+};
+const changeSearch = _.debounce(onSearching, 500);
 </script>
 
 <template>
-  <div class="container">
+  <div class="container px-3 md:px-0 mb-7">
     <label
       for="search"
       class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -47,6 +52,7 @@ const changeSearch = _.debounce(() => console.log(querySearch.value), 1000);
         :placeholder="props.placeholder"
         v-model="querySearch"
         @keyup="changeSearch"
+        autocomplete="off"
       />
     </div>
   </div>

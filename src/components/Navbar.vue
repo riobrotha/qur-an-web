@@ -6,7 +6,9 @@ import { RouterLink } from "vue-router";
   <nav
     class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 mb-10"
   >
-    <div class="container flex flex-wrap items-center justify-between">
+    <div
+      class="container flex flex-wrap items-center justify-between px-3 md:px-0"
+    >
       <router-link to="/" class="flex items-center">
         <span
           class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
