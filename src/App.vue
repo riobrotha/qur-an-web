@@ -5,5 +5,5 @@ import Navbar from "@/components/Navbar.vue";
 
 <template>
   <Navbar />
-  <RouterView />
+  <RouterView :key="$route.fullPath" />
 </template>

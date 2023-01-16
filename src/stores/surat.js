@@ -7,16 +7,6 @@ export const useSuratStore = defineStore("surat", () => {
   const isSuratList = computed(() => surat.value.length > 0);
   const getSuratList = computed(() => surat.value);
   let suratList = [];
-  const fetchSurat = async () => {
-    try {
-      const { data } = await axios.get("surat");
-
-      surat.value = data;
-      suratList = data;
-    } catch (e) {
-      console.error(e);
-    }
-  };
 
   const onSearch = (query) => {
     if (query !== "") {
@@ -32,5 +22,15 @@ export const useSuratStore = defineStore("surat", () => {
     }
   };
 
-  return { surat, isSuratList, fetchSurat, onSearch, getSuratList };
+  const fetchSurat = async () => {
+    try {
+      const { data } = await axios.get("surat");
+      surat.value = data;
+      suratList = data;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  return { surat, isSuratList, fetchSurat, onSearch, getSuratList, suratList };
 });

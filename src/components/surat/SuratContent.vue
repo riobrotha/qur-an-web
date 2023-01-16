@@ -1,25 +1,30 @@
 <script setup>
-import { ref, onMounted, computed } from "vue";
 import { useSuratStore } from "@/stores/surat";
+import { useRouter } from "vue-router";
 
 const suratStore = useSuratStore();
+const router = useRouter();
+await suratStore.fetchSurat();
 
-const suratList = computed(() => suratStore.getSuratList);
-const isSuratList = computed(() => suratStore.isSuratList);
-
-onMounted(() => {
-  suratStore.fetchSurat();
-});
+const goToDetailSurat = (nomorSurat) => {
+  router.push("/surat/" + nomorSurat);
+};
 </script>
 
 <template>
-  <template v-if="isSuratList">
+  <transition-group
+    tag="div"
+    name="list"
+    appear
+    class="grid gap-3 grid-cols-1 md:grid-cols-3 mb-10 relative"
+  >
     <div
-      class="w-full text-right p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700"
-      v-for="(item, index) in suratList"
+      class="w-full text-right p-6 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 cursor-pointer"
+      v-for="(item, index) in suratStore.surat"
       :key="index"
+      @click="goToDetailSurat(item.nomor)"
     >
-      <div class="flex justify-between">
+      <div class="flex justify-between items-center">
         <h5
           class="text-2xl text-left font-semibold text-gray-900 dark:text-white"
         >
@@ -40,21 +45,15 @@ onMounted(() => {
           ></path>
         </svg>
       </div>
-
-      <a href="#">
-        <h5
-          class="mb-2 text-3xl text-right font-semibold tracking-tight text-gray-900 dark:text-white"
-        >
-          {{ item.nama }}
-        </h5>
-      </a>
+      <h5
+        class="mb-2 text-3xl text-right font-semibold tracking-tight text-gray-900 dark:text-white"
+      >
+        {{ item.nama }}
+      </h5>
       <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
         {{ item.tempat_turun.toUpperCase() }} 🔵 {{ item.arti }}
       </p>
-      <a
-        href="#"
-        class="inline-flex items-center text-blue-600 hover:underline"
-      >
+      <p class="inline-flex items-center text-blue-600 hover:underline">
         Baca
         <svg
           class="w-5 h-5 ml-2"
@@ -69,9 +68,21 @@ onMounted(() => {
             d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z"
           ></path>
         </svg>
-      </a>
+      </p>
     </div>
-  </template>
+  </transition-group>
 </template>
 
-<style lang="scss" scoped></style>
+<style>
+/* apply transition to moving elements */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+</style>

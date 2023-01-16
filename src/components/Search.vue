@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import _ from "lodash";
 import { useSuratStore } from "@/stores/surat";
 const props = defineProps({
